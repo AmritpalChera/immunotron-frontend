@@ -8,7 +8,7 @@ export default function Home() {
   const [message, setMessage] = useState('Ready!');
 
   const sendInjectCommand = async () => {
-    const data = await backend.post('/injection', {}).then(res => res.data).catch(err => err.response.data);
+    const data = await backend.post('/injection').then(res => res.data).catch(err => err.response.data);
     console.log('Returned: ', data);
   }
 
@@ -36,7 +36,7 @@ export default function Home() {
   }
 
   const getUpdatedData = async () => {
-    const data = await backend.post('/getStatus').then(res => res.data).catch(err => console.log(err.response.data));
+    const data = await backend.get('/state').then(res => res.data).catch(err => console.log(err.response.data));
     if (data?.state) getDisplayMessage(data.state);
   }
 
@@ -46,8 +46,8 @@ export default function Home() {
     return () => clearInterval(intervalId);
   }, []);
 
-  const engagePlunge = () => backend.post('/engage_plunge');
-  const retractPlunge = () => backend.post('/retract_plunge');
+  const engagePlunger = () => backend.post('/engage_plunger');
+  const retractPlunger = () => backend.post('/retract_plunger');
   const engageDisposal = () => backend.post('/engage_disposal');
   const retractDisposal = () => backend.post('/retract_disposal');
   
@@ -66,13 +66,13 @@ export default function Home() {
       <button onClick={sendInjectCommand} className="bg-green-500 px-8 w-64 py-4 rounded">Inject</button>
       <div className="flex flex-col gap-4">
         <div className="flex gap-4">
-          <button onClick={engagePlunge} className="bg-purple-300 md:w-48 px-8 py-4 rounded">Engage Plunge</button>
-          <button onClick={retractPlunge} className="bg-purple-300 md:w-48 px-8 py-4 rounded">Retract Plunge</button>
+          <button onClick={engagePlunger} className="bg-purple-300 md:w-48 px-8 py-4 rounded">Engage Plunger</button>
+          <button onClick={retractPlunger} className="bg-purple-300 md:w-48 px-8 py-4 rounded">Retract Plunger</button>
         </div>
         
         <div className="flex gap-4">
-          <button onClick={engageDisposal} className="bg-purple-300 md:w-48 px-8 py-4 rounded">Engage Dispose</button>
-          <button onClick={retractDisposal} className="bg-purple-300 md:w-48 px-8 py-4 rounded">Retract Dispose</button>
+          <button onClick={engageDisposal} className="bg-purple-300 md:w-48 px-8 py-4 rounded">Engage Disposal</button>
+          <button onClick={retractDisposal} className="bg-purple-300 md:w-48 px-8 py-4 rounded">Retract Disposal</button>
         </div>
        
       </div>
