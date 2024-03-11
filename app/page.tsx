@@ -36,8 +36,8 @@ export default function Home() {
   }
 
   const getUpdatedData = async () => {
-    const data = await backend.get('/state').then(res => res?.data).catch(err => console.log(err?.response));
-    console.log("data is: ", data);
+    const data = await backend.get('/state').then(res => res?.data).catch(err => {});
+    data && console.log("data is: ", data);
     if (data?.state) getDisplayMessage(data.state);
   }
 
